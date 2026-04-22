@@ -1,0 +1,677 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>iHunters Germany — AI Export Lead Platform | AI驱动出口商机平台</title>
+  <meta name="description" content="AI-powered platform that helps Chinese exporters find and contact B2B/B2C buyers in Germany." />
+  <style>
+    :root {
+      --navy:   #0f1b2d;
+      --blue:   #1a56db;
+      --blue2:  #2563eb;
+      --sky:    #eff6ff;
+      --red:    #dc2626;
+      --gold:   #f59e0b;
+      --green:  #16a34a;
+      --gray1:  #f8fafc;
+      --gray2:  #e2e8f0;
+      --gray3:  #94a3b8;
+      --text:   #1e293b;
+      --muted:  #64748b;
+      --white:  #ffffff;
+      --radius: 14px;
+      --shadow: 0 4px 24px rgba(15,27,45,.10);
+    }
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+    html { scroll-behavior: smooth; }
+    body {
+      font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", "PingFang SC",
+                   "Hiragino Sans GB", "Microsoft YaHei", sans-serif;
+      color: var(--text);
+      background: var(--white);
+      line-height: 1.65;
+    }
+
+    /* ── NAV ── */
+    nav {
+      position: sticky; top: 0; z-index: 100;
+      background: rgba(255,255,255,.92);
+      backdrop-filter: blur(12px);
+      border-bottom: 1px solid var(--gray2);
+      padding: 0 clamp(16px, 5vw, 64px);
+      display: flex; align-items: center; justify-content: space-between;
+      height: 60px;
+    }
+    .nav-logo { display: flex; align-items: center; gap: 10px; text-decoration: none; }
+    .nav-logo .flag { font-size: 1.3rem; }
+    .nav-logo .name { font-weight: 700; font-size: 1.05rem; color: var(--navy); }
+    .nav-right { display: flex; align-items: center; gap: 12px; }
+    .lang-btn {
+      display: flex; align-items: center; gap: 2px;
+      border: 1px solid var(--gray2); border-radius: 99px;
+      overflow: hidden; cursor: pointer;
+    }
+    .lang-btn button {
+      padding: 5px 14px; border: none; background: transparent;
+      font-size: .85rem; font-weight: 600; cursor: pointer;
+      color: var(--muted); transition: all .2s;
+    }
+    .lang-btn button.active {
+      background: var(--blue); color: var(--white);
+    }
+    .gh-link {
+      display: flex; align-items: center; gap: 6px;
+      text-decoration: none; color: var(--navy);
+      font-size: .88rem; font-weight: 600;
+      padding: 6px 14px; border-radius: 8px;
+      border: 1px solid var(--gray2);
+      transition: background .2s;
+    }
+    .gh-link:hover { background: var(--gray1); }
+    .gh-link svg { width: 18px; height: 18px; }
+
+    /* ── HERO ── */
+    .hero {
+      background: linear-gradient(135deg, var(--navy) 0%, #1e3a5f 60%, #163058 100%);
+      color: var(--white);
+      padding: clamp(64px, 10vw, 120px) clamp(16px, 5vw, 64px);
+      text-align: center;
+      position: relative; overflow: hidden;
+    }
+    .hero::before {
+      content: "";
+      position: absolute; inset: 0;
+      background: radial-gradient(ellipse 70% 60% at 50% 110%, rgba(37,99,235,.35) 0%, transparent 70%);
+    }
+    .hero-badge {
+      display: inline-flex; align-items: center; gap: 8px;
+      background: rgba(255,255,255,.1); border: 1px solid rgba(255,255,255,.18);
+      border-radius: 99px; padding: 6px 18px;
+      font-size: .82rem; font-weight: 600; letter-spacing: .04em;
+      text-transform: uppercase; margin-bottom: 28px; position: relative;
+    }
+    .hero-badge .dot { width: 8px; height: 8px; border-radius: 50%; background: #4ade80; animation: pulse 2s infinite; }
+    @keyframes pulse { 0%,100%{opacity:1;transform:scale(1)} 50%{opacity:.5;transform:scale(1.4)} }
+    .hero h1 {
+      font-size: clamp(2.2rem, 5vw, 3.8rem);
+      font-weight: 800; line-height: 1.15;
+      margin-bottom: 20px; position: relative;
+    }
+    .hero h1 span { color: #60a5fa; }
+    .hero .sub {
+      font-size: clamp(1rem, 2vw, 1.25rem);
+      color: rgba(255,255,255,.75);
+      max-width: 640px; margin: 0 auto 36px;
+      position: relative;
+    }
+    .hero-route {
+      display: flex; align-items: center; justify-content: center;
+      gap: 16px; margin-bottom: 44px; position: relative;
+    }
+    .route-pill {
+      display: flex; align-items: center; gap: 10px;
+      background: rgba(255,255,255,.1); border: 1px solid rgba(255,255,255,.2);
+      border-radius: 12px; padding: 12px 24px;
+    }
+    .route-pill .flag-lg { font-size: 2rem; }
+    .route-pill .country { font-weight: 700; font-size: 1rem; }
+    .route-arrow {
+      font-size: 1.6rem; color: var(--gold);
+      display: flex; flex-direction: column; align-items: center;
+    }
+    .route-arrow small { font-size: .65rem; color: rgba(255,255,255,.5); letter-spacing:.06em; text-transform:uppercase; }
+    .hero-cta { display: flex; gap: 14px; justify-content: center; flex-wrap: wrap; position: relative; }
+    .btn {
+      display: inline-flex; align-items: center; gap: 8px;
+      padding: 13px 28px; border-radius: 10px;
+      font-size: .95rem; font-weight: 700; text-decoration: none;
+      transition: all .2s; cursor: pointer; border: none;
+    }
+    .btn-primary { background: var(--blue2); color: var(--white); box-shadow: 0 4px 14px rgba(37,99,235,.5); }
+    .btn-primary:hover { background: #1d4ed8; transform: translateY(-1px); }
+    .btn-ghost { background: rgba(255,255,255,.1); color: var(--white); border: 1px solid rgba(255,255,255,.25); }
+    .btn-ghost:hover { background: rgba(255,255,255,.2); }
+
+    /* ── SECTIONS ── */
+    section { padding: clamp(60px, 8vw, 100px) clamp(16px, 5vw, 64px); }
+    .section-label {
+      font-size: .8rem; font-weight: 700; letter-spacing: .1em;
+      text-transform: uppercase; color: var(--blue2); margin-bottom: 12px;
+    }
+    h2 {
+      font-size: clamp(1.7rem, 3.5vw, 2.6rem);
+      font-weight: 800; line-height: 1.2; margin-bottom: 16px;
+    }
+    .section-desc {
+      font-size: 1.05rem; color: var(--muted);
+      max-width: 600px; margin-bottom: 56px;
+    }
+    .center { text-align: center; }
+    .center .section-desc { margin-left: auto; margin-right: auto; }
+
+    /* ── STATS BAR ── */
+    .stats-bar {
+      background: var(--sky);
+      padding: 36px clamp(16px, 5vw, 64px);
+      display: flex; justify-content: center;
+      gap: clamp(24px, 6vw, 80px); flex-wrap: wrap;
+    }
+    .stat-item { text-align: center; }
+    .stat-num { font-size: 2.2rem; font-weight: 800; color: var(--blue2); line-height: 1; }
+    .stat-lbl { font-size: .85rem; color: var(--muted); margin-top: 4px; }
+
+    /* ── FEATURES GRID ── */
+    .features-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+      gap: 24px;
+    }
+    .feature-card {
+      background: var(--gray1); border: 1px solid var(--gray2);
+      border-radius: var(--radius); padding: 32px;
+      transition: box-shadow .2s, transform .2s;
+    }
+    .feature-card:hover { box-shadow: var(--shadow); transform: translateY(-3px); }
+    .feature-icon {
+      width: 52px; height: 52px; border-radius: 14px;
+      display: flex; align-items: center; justify-content: center;
+      font-size: 1.6rem; margin-bottom: 20px;
+    }
+    .icon-blue  { background: #dbeafe; }
+    .icon-green { background: #dcfce7; }
+    .icon-amber { background: #fef3c7; }
+    .icon-red   { background: #fee2e2; }
+    .icon-purple{ background: #f3e8ff; }
+    .icon-teal  { background: #ccfbf1; }
+    .feature-card h3 { font-size: 1.1rem; font-weight: 700; margin-bottom: 10px; }
+    .feature-card p  { font-size: .93rem; color: var(--muted); line-height: 1.6; }
+
+    /* ── HOW IT WORKS ── */
+    .steps { display: flex; flex-direction: column; gap: 0; max-width: 800px; margin: 0 auto; }
+    .step {
+      display: flex; gap: 28px; align-items: flex-start;
+      padding: 32px 0; border-bottom: 1px solid var(--gray2);
+    }
+    .step:last-child { border-bottom: none; }
+    .step-num {
+      flex-shrink: 0;
+      width: 48px; height: 48px; border-radius: 50%;
+      background: var(--blue2); color: var(--white);
+      display: flex; align-items: center; justify-content: center;
+      font-weight: 800; font-size: 1.1rem;
+    }
+    .step-body h3 { font-size: 1.1rem; font-weight: 700; margin-bottom: 8px; }
+    .step-body p  { color: var(--muted); font-size: .93rem; }
+    .step-tag {
+      display: inline-block; margin-top: 10px;
+      font-size: .75rem; font-weight: 700; padding: 3px 10px; border-radius: 99px;
+    }
+    .tag-ai   { background: #dbeafe; color: #1d4ed8; }
+    .tag-auto { background: #dcfce7; color: #15803d; }
+    .tag-smart{ background: #fef3c7; color: #92400e; }
+
+    /* ── TECH STACK ── */
+    .tech-grid {
+      display: flex; flex-wrap: wrap; gap: 14px;
+      justify-content: center;
+    }
+    .tech-chip {
+      display: flex; align-items: center; gap: 8px;
+      background: var(--gray1); border: 1px solid var(--gray2);
+      border-radius: 10px; padding: 10px 18px;
+      font-size: .9rem; font-weight: 600;
+    }
+    .tech-chip .dot-tech { width: 10px; height: 10px; border-radius: 50%; }
+
+    /* ── SETUP ── */
+    .setup-grid {
+      display: grid; grid-template-columns: 1fr 1fr; gap: 40px;
+      align-items: start;
+    }
+    @media(max-width:700px) { .setup-grid { grid-template-columns: 1fr; } }
+    .setup-card {
+      background: var(--navy); color: var(--white);
+      border-radius: var(--radius); padding: 36px;
+    }
+    .setup-card h3 { font-size: 1.2rem; font-weight: 700; margin-bottom: 20px; color: #93c5fd; }
+    .env-row {
+      display: flex; flex-direction: column; gap: 12px; margin-bottom: 24px;
+    }
+    .env-item {
+      background: rgba(255,255,255,.07); border: 1px solid rgba(255,255,255,.1);
+      border-radius: 8px; padding: 12px 16px;
+    }
+    .env-key { font-family: monospace; font-size: .9rem; color: #fbbf24; }
+    .env-desc { font-size: .8rem; color: rgba(255,255,255,.5); margin-top: 3px; }
+    .code-block {
+      background: rgba(0,0,0,.4); border-radius: 10px;
+      padding: 20px; font-family: monospace; font-size: .88rem;
+      line-height: 1.8; overflow-x: auto; color: #e2e8f0;
+    }
+    .code-block .c { color: #6ee7b7; }
+    .code-block .cmd { color: #93c5fd; }
+    .setup-steps { counter-reset: s; display: flex; flex-direction: column; gap: 20px; }
+    .setup-step { display: flex; gap: 16px; }
+    .setup-step-num {
+      flex-shrink: 0;
+      width: 30px; height: 30px; border-radius: 50%;
+      background: rgba(255,255,255,.1); border: 1px solid rgba(255,255,255,.2);
+      display: flex; align-items: center; justify-content: center;
+      font-size: .85rem; font-weight: 700; color: #93c5fd;
+    }
+    .setup-step-body { font-size: .9rem; color: rgba(255,255,255,.8); }
+    .setup-step-body strong { color: var(--white); }
+
+    /* ── IMPORT FORMAT ── */
+    .import-demo {
+      background: var(--gray1); border: 1px solid var(--gray2);
+      border-radius: var(--radius); padding: 28px;
+    }
+    .import-demo pre {
+      font-family: monospace; font-size: .88rem;
+      color: var(--text); line-height: 1.7;
+      overflow-x: auto;
+    }
+    .import-demo .col-head { color: var(--blue2); font-weight: 700; }
+    .import-demo .col-opt  { color: var(--gray3); }
+
+    /* ── FOOTER ── */
+    footer {
+      background: var(--navy); color: rgba(255,255,255,.6);
+      padding: 48px clamp(16px, 5vw, 64px);
+      display: flex; flex-wrap: wrap; gap: 24px;
+      justify-content: space-between; align-items: center;
+    }
+    footer .foot-left { display: flex; flex-direction: column; gap: 6px; }
+    footer .foot-name { font-weight: 700; font-size: 1.05rem; color: var(--white); }
+    footer a { color: #60a5fa; text-decoration: none; }
+    footer a:hover { text-decoration: underline; }
+
+    /* ── MISC ── */
+    .badge-row { display: flex; gap: 8px; flex-wrap: wrap; margin-top: 8px; }
+    .badge {
+      font-size: .75rem; font-weight: 700; padding: 3px 10px;
+      border-radius: 99px; background: var(--gray2); color: var(--muted);
+    }
+    .badge.b2b { background: #dbeafe; color: #1d4ed8; }
+    .badge.b2c { background: #fce7f3; color: #be185d; }
+    .badge.ai  { background: #ede9fe; color: #6d28d9; }
+    .badge.free{ background: #dcfce7; color: #166534; }
+
+    .divider { border: none; border-top: 1px solid var(--gray2); margin: 0; }
+
+    @media(max-width: 540px) {
+      .route-pill .country { display: none; }
+      .hero-route { gap: 8px; }
+    }
+  </style>
+</head>
+<body>
+
+<!-- ═══════════ NAV ═══════════ -->
+<nav>
+  <a class="nav-logo" href="#">
+    <span class="flag">🇨🇳→🇩🇪</span>
+    <span class="name">iHunters Germany</span>
+  </a>
+  <div class="nav-right">
+    <div class="lang-btn">
+      <button id="btnEN" class="active" onclick="setLang('en')">EN</button>
+      <button id="btnZH" onclick="setLang('zh')">中文</button>
+    </div>
+    <a class="gh-link" href="https://github.com/sleangao/iHunter" target="_blank" rel="noopener">
+      <svg viewBox="0 0 24 24" fill="currentColor">
+        <path d="M12 2C6.477 2 2 6.484 2 12.017c0 4.425 2.865 8.18 6.839 9.504.5.092.682-.217.682-.483
+                 0-.237-.008-.868-.013-1.703-2.782.605-3.369-1.343-3.369-1.343-.454-1.158-1.11-1.466-1.11-1.466
+                 -.908-.62.069-.608.069-.608 1.003.07 1.531 1.032 1.531 1.032.892 1.53 2.341 1.088 2.91.832
+                 .092-.647.35-1.088.636-1.338-2.22-.253-4.555-1.113-4.555-4.951 0-1.093.39-1.988 1.029-2.688
+                 -.103-.253-.446-1.272.098-2.65 0 0 .84-.27 2.75 1.026A9.564 9.564 0 0112 6.844c.85.004 1.705.115
+                 2.504.337 1.909-1.296 2.747-1.027 2.747-1.027.546 1.379.202 2.398.1 2.651.64.7 1.028 1.595
+                 1.028 2.688 0 3.848-2.339 4.695-4.566 4.943.359.309.678.92.678 1.855 0 1.338-.012 2.419-.012
+                 2.747 0 .268.18.58.688.482A10.019 10.019 0 0022 12.017C22 6.484 17.522 2 12 2z"/>
+      </svg>
+      <span data-en="GitHub" data-zh="GitHub">GitHub</span>
+    </a>
+  </div>
+</nav>
+
+<!-- ═══════════ HERO ═══════════ -->
+<section class="hero">
+  <div class="hero-badge">
+    <span class="dot"></span>
+    <span data-en="AI-Powered · Open Source · Free to Self-Host" data-zh="AI驱动 · 开源 · 可自部署"></span>
+  </div>
+  <h1 data-en="Find German Buyers for<br><span>Your Chinese Products</span>" data-zh="为您的<span>中国产品</span><br>寻找德国买家"></h1>
+  <p class="sub" data-en="iHunters Germany is an AI-powered export lead platform that identifies B2B distributors and B2C buyers in Germany, discovers their contact emails, and writes personalized outreach in both German and English — automatically."
+     data-zh="iHunters Germany 是一款 AI 驱动的出口商机平台，能够自动识别德国 B2B 经销商和 B2C 买家，查找联系邮箱，并用德语和英语撰写个性化开发信——全程自动化。"></p>
+  <div class="hero-route">
+    <div class="route-pill">
+      <span class="flag-lg">🇨🇳</span>
+      <span class="country" data-en="China" data-zh="中国"></span>
+    </div>
+    <div class="route-arrow">
+      <span>→</span>
+      <small data-en="EXPORT" data-zh="出口"></small>
+    </div>
+    <div class="route-pill">
+      <span class="flag-lg">🇩🇪</span>
+      <span class="country" data-en="Germany" data-zh="德国"></span>
+    </div>
+  </div>
+  <div class="hero-cta">
+    <a class="btn btn-primary" href="https://github.com/sleangao/iHunter" target="_blank">
+      <svg width="18" height="18" viewBox="0 0 24 24" fill="currentColor"><path d="M12 2C6.477 2 2 6.484 2 12.017c0 4.425 2.865 8.18 6.839 9.504.5.092.682-.217.682-.483 0-.237-.008-.868-.013-1.703-2.782.605-3.369-1.343-3.369-1.343-.454-1.158-1.11-1.466-1.11-1.466-.908-.62.069-.608.069-.608 1.003.07 1.531 1.032 1.531 1.032.892 1.53 2.341 1.088 2.91.832.092-.647.35-1.088.636-1.338-2.22-.253-4.555-1.113-4.555-4.951 0-1.093.39-1.988 1.029-2.688-.103-.253-.446-1.272.098-2.65 0 0 .84-.27 2.75 1.026A9.564 9.564 0 0112 6.844c.85.004 1.705.115 2.504.337 1.909-1.296 2.747-1.027 2.747-1.027.546 1.379.202 2.398.1 2.651.64.7 1.028 1.595 1.028 2.688 0 3.848-2.339 4.695-4.566 4.943.359.309.678.92.678 1.855 0 1.338-.012 2.419-.012 2.747 0 .268.18.58.688.482A10.019 10.019 0 0022 12.017C22 6.484 17.522 2 12 2z"/></svg>
+      <span data-en="View on GitHub" data-zh="在 GitHub 上查看"></span>
+    </a>
+    <a class="btn btn-ghost" href="#how-it-works">
+      <span data-en="See how it works ↓" data-zh="查看使用流程 ↓"></span>
+    </a>
+  </div>
+</section>
+
+<!-- ═══════════ STATS ═══════════ -->
+<div class="stats-bar">
+  <div class="stat-item">
+    <div class="stat-num">7</div>
+    <div class="stat-lbl" data-en="AI Agents" data-zh="AI 智能体"></div>
+  </div>
+  <div class="stat-item">
+    <div class="stat-num">2</div>
+    <div class="stat-lbl" data-en="Languages Generated" data-zh="双语开发信"></div>
+  </div>
+  <div class="stat-item">
+    <div class="stat-num">B2B + B2C</div>
+    <div class="stat-lbl" data-en="Lead Types" data-zh="商机类型"></div>
+  </div>
+  <div class="stat-item">
+    <div class="stat-num">100%</div>
+    <div class="stat-lbl" data-en="Self-Hosted & Private" data-zh="本地部署 · 数据私密"></div>
+  </div>
+</div>
+
+<!-- ═══════════ FEATURES ═══════════ -->
+<section id="features">
+  <div class="center">
+    <div class="section-label" data-en="Features" data-zh="功能特性"></div>
+    <h2 data-en="Everything You Need to Find German Buyers" data-zh="一站式德国买家开发工具"></h2>
+    <p class="section-desc" data-en="From market research to personalised outreach, the entire workflow runs in one local app — no subscriptions, no data leaks."
+       data-zh="从市场调研到个性化开发信，整个工作流在本地一键完成——无需订阅服务，数据完全私密。"></p>
+  </div>
+  <div class="features-grid">
+
+    <div class="feature-card">
+      <div class="feature-icon icon-blue">🔍</div>
+      <h3 data-en="AI Market Analysis" data-zh="AI 市场分析"></h3>
+      <p data-en="Get an instant market-fit score (1–10), demand level, target sectors, top German cities, key competitors, and price positioning — all tailored to your product."
+         data-zh="即时获得市场匹配评分（1-10分）、需求水平、目标行业、德国重点城市、主要竞争对手和价格定位——全部基于您的产品量身定制。"></p>
+      <div class="badge-row">
+        <span class="badge ai" data-en="Groq LLaMA 3" data-zh="Groq LLaMA 3">Groq LLaMA 3</span>
+        <span class="badge b2b" data-en="B2B Potential" data-zh="B2B潜力">B2B</span>
+        <span class="badge b2c" data-en="B2C Potential" data-zh="B2C潜力">B2C</span>
+      </div>
+    </div>
+
+    <div class="feature-card">
+      <div class="feature-icon icon-green">🏭</div>
+      <h3 data-en="B2B Lead Generation" data-zh="B2B 商机发现"></h3>
+      <p data-en="Automatically generate German distributors, wholesalers, retailers, and importers in your target cities and sectors — with contact names, phones, and emails."
+         data-zh="自动生成德国经销商、批发商、零售商和进口商，覆盖目标城市和行业，附带联系人姓名、电话和邮箱。"></p>
+      <div class="badge-row">
+        <span class="badge b2b">B2B</span>
+        <span class="badge ai">AI Generated</span>
+      </div>
+    </div>
+
+    <div class="feature-card">
+      <div class="feature-icon icon-purple">🛍️</div>
+      <h3 data-en="B2C Lead Generation" data-zh="B2C 商机发现"></h3>
+      <p data-en="Find individual resellers, Amazon FBA sellers, boutique owners, and online-shop operators who match your product niche."
+         data-zh="找到与您产品品类匹配的个人卖家、亚马逊 FBA 卖家、精品店主和网店经营者。"></p>
+      <div class="badge-row">
+        <span class="badge b2c">B2C</span>
+        <span class="badge ai">AI Generated</span>
+      </div>
+    </div>
+
+    <div class="feature-card">
+      <div class="feature-icon icon-amber">📧</div>
+      <h3 data-en="Auto Email Discovery" data-zh="自动邮箱发现"></h3>
+      <p data-en="Scrapes company websites to extract contact emails. Automatically falls back to Hunter.io API if the website scrape yields no results."
+         data-zh="自动爬取公司网站提取联系邮箱，若抓取失败则自动切换至 Hunter.io API 作为兜底方案。"></p>
+      <div class="badge-row">
+        <span class="badge free" data-en="Web Scraper" data-zh="网页爬虫">Web Scraper</span>
+        <span class="badge" data-en="Hunter.io Fallback" data-zh="Hunter.io 兜底">Hunter.io</span>
+      </div>
+    </div>
+
+    <div class="feature-card">
+      <div class="feature-icon icon-teal">✅</div>
+      <h3 data-en="Email Verification" data-zh="邮箱验证"></h3>
+      <p data-en="Validates email addresses via format check and live DNS/MX record lookup — so you only send to real inboxes."
+         data-zh="通过格式校验和实时 DNS/MX 记录查询验证邮箱地址，确保您只向真实邮箱发送邮件。"></p>
+      <div class="badge-row">
+        <span class="badge free" data-en="DNS/MX Check" data-zh="DNS/MX 验证">DNS/MX</span>
+        <span class="badge" data-en="Real-time" data-zh="实时">Real-time</span>
+      </div>
+    </div>
+
+    <div class="feature-card">
+      <div class="feature-icon icon-red">✍️</div>
+      <h3 data-en="Bilingual Outreach Emails" data-zh="双语开发信生成"></h3>
+      <p data-en="Generates personalised cold emails in both German and English with one click — tailored to the lead's industry, city, and your product specifics."
+         data-zh="一键生成同时包含德语和英语的个性化开发信——根据买家所在行业、城市及您的产品信息量身撰写。"></p>
+      <div class="badge-row">
+        <span class="badge" style="background:#fef9c3;color:#713f12;">🇩🇪 Deutsch</span>
+        <span class="badge" style="background:#e0f2fe;color:#0369a1;">🇬🇧 English</span>
+        <span class="badge ai">AI Written</span>
+      </div>
+    </div>
+
+    <div class="feature-card">
+      <div class="feature-icon icon-blue">📋</div>
+      <h3 data-en="Bulk Company Import" data-zh="批量导入公司"></h3>
+      <p data-en="Paste a list of real companies in a simple pipe-separated format. The platform auto-discovers emails for every company in bulk."
+         data-zh="将真实公司以简单的竖线分隔格式粘贴导入，平台自动批量查找每家公司的联系邮箱。"></p>
+    </div>
+
+    <div class="feature-card">
+      <div class="feature-icon icon-green">📊</div>
+      <h3 data-en="CRM & Status Tracking" data-zh="商机状态追踪"></h3>
+      <p data-en="Track each lead through the sales pipeline: New → Contacted → Qualified → Closed. Add notes and monitor your outreach progress."
+         data-zh="追踪每条商机的销售进度：新建 → 已联系 → 已验证 → 已成交。添加备注并监控开发进展。"></p>
+    </div>
+
+  </div>
+</section>
+
+<hr class="divider" />
+
+<!-- ═══════════ HOW IT WORKS ═══════════ -->
+<section id="how-it-works">
+  <div class="center" style="margin-bottom:56px;">
+    <div class="section-label" data-en="Workflow" data-zh="使用流程"></div>
+    <h2 data-en="From Product to Outreach in 5 Steps" data-zh="5 步完成从产品到开发信"></h2>
+    <p class="section-desc" data-en="The platform guides you through a structured workflow — each step feeds into the next automatically."
+       data-zh="平台引导您完成结构化工作流——每个步骤自动衔接下一步。"></p>
+  </div>
+  <div class="steps">
+
+    <div class="step">
+      <div class="step-num">1</div>
+      <div class="step-body">
+        <h3 data-en="Add Your Product" data-zh="添加您的产品"></h3>
+        <p data-en="Enter your product's name, category, description, price range, MOQ, and origin city. You can manage multiple products simultaneously."
+           data-zh="填写产品名称、类别、描述、价格区间、最小起订量和发货城市。支持同时管理多个产品。"></p>
+      </div>
+    </div>
+
+    <div class="step">
+      <div class="step-num">2</div>
+      <div class="step-body">
+        <h3 data-en="AI Analyses the German Market" data-zh="AI 分析德国市场"></h3>
+        <p data-en="The market analyst agent studies your product and returns a fit score, target buyer sectors, recommended German cities, competitor landscape, and strategic insights."
+           data-zh="市场分析智能体研究您的产品，返回匹配评分、目标买家行业、推荐德国城市、竞争格局和战略洞察。"></p>
+        <span class="step-tag tag-ai" data-en="AI Powered" data-zh="AI驱动"></span>
+      </div>
+    </div>
+
+    <div class="step">
+      <div class="step-num">3</div>
+      <div class="step-body">
+        <h3 data-en="Generate B2B & B2C Leads" data-zh="生成 B2B 和 B2C 商机"></h3>
+        <p data-en="Choose how many B2B (distributors, retailers) and B2C (individual resellers) leads you want, and which German cities to target. The AI generates a detailed contact list in seconds."
+           data-zh="选择需要多少条 B2B（经销商、零售商）和 B2C（个人卖家）商机，以及目标德国城市。AI 在几秒内生成详细联系人列表。"></p>
+        <span class="step-tag tag-ai" data-en="AI Generated" data-zh="AI生成"></span>
+      </div>
+    </div>
+
+    <div class="step">
+      <div class="step-num">4</div>
+      <div class="step-body">
+        <h3 data-en="Auto-Find & Verify Emails" data-zh="自动查找并验证邮箱"></h3>
+        <p data-en="For real imported companies, the scraper visits each website and extracts contact emails. Hunter.io provides a fallback. All emails can then be verified via DNS lookup."
+           data-zh="对于导入的真实公司，爬虫访问每个网站并提取联系邮箱。Hunter.io 提供兜底支持，所有邮箱均可通过 DNS 查询验证。"></p>
+        <span class="step-tag tag-auto" data-en="Automated" data-zh="自动化"></span>
+      </div>
+    </div>
+
+    <div class="step">
+      <div class="step-num">5</div>
+      <div class="step-body">
+        <h3 data-en="Generate & Send Outreach Emails" data-zh="生成并发送开发信"></h3>
+        <p data-en="Click once to generate a bilingual (German + English) cold email personalised to each lead's company, industry, and city. Track replies, update statuses, and close deals."
+           data-zh="点击一次即可生成针对每位买家公司、行业和城市个性化定制的双语开发信（德语+英语）。追踪回复、更新状态、促成交易。"></p>
+        <span class="step-tag tag-smart" data-en="Personalized" data-zh="个性化"></span>
+      </div>
+    </div>
+
+  </div>
+</section>
+
+<hr class="divider" />
+
+<!-- ═══════════ BULK IMPORT ═══════════ -->
+<section style="background: var(--sky);">
+  <div class="center" style="margin-bottom:40px;">
+    <div class="section-label" data-en="Bulk Import" data-zh="批量导入"></div>
+    <h2 data-en="Already Have a Company List? Import in Seconds." data-zh="已有公司名单？几秒钟完成导入"></h2>
+    <p class="section-desc" data-en="Paste companies in a simple pipe-separated format — the platform handles email discovery automatically for every entry."
+       data-zh="以简单的竖线分隔格式粘贴公司列表——平台自动为每条记录查找邮箱。"></p>
+  </div>
+  <div class="import-demo" style="max-width:700px;margin:0 auto;">
+    <p style="font-size:.85rem;color:var(--muted);margin-bottom:14px;" data-en="Format: one company per line" data-zh="格式：每行一家公司"></p>
+    <pre><span class="col-head">Company Name</span>  |  <span class="col-head">Website</span>  |  <span class="col-head">City</span>  |  <span class="col-head">Industry</span>  |  <span class="col-opt">[Description]</span>  |  <span class="col-opt">[Size]</span>
+
+Müller GmbH          |  mueller-gmbh.de   |  Berlin   |  Retail
+Schmidt Import AG    |  schmidt-import.de |  Hamburg  |  Wholesale  |  Kitchenware specialist  |  200
+Weber Online Store   |  weber-shop.de     |  Munich   |  E-Commerce</pre>
+    <p style="font-size:.82rem;color:var(--muted);margin-top:16px;" data-en="Fields in [brackets] are optional. Email discovery runs automatically on import."
+       data-zh="[括号]中的字段为可选项。邮箱查找在导入时自动执行。"></p>
+  </div>
+</section>
+
+<hr class="divider" />
+
+<!-- ═══════════ TECH STACK ═══════════ -->
+<section>
+  <div class="center" style="margin-bottom:44px;">
+    <div class="section-label" data-en="Tech Stack" data-zh="技术栈"></div>
+    <h2 data-en="Built on Solid, Lightweight Tech" data-zh="基于轻量可靠的技术构建"></h2>
+    <p class="section-desc" data-en="No heavyweight cloud services required. Runs entirely on your laptop."
+       data-zh="无需任何重量级云服务，完全在您的笔记本电脑上运行。"></p>
+  </div>
+  <div class="tech-grid">
+    <div class="tech-chip"><span class="dot-tech" style="background:#009688;"></span> FastAPI</div>
+    <div class="tech-chip"><span class="dot-tech" style="background:#3776ab;"></span> Python 3.11+</div>
+    <div class="tech-chip"><span class="dot-tech" style="background:#f59e0b;"></span> Groq (LLaMA 3)</div>
+    <div class="tech-chip"><span class="dot-tech" style="background:#6b7280;"></span> SQLite + aiosqlite</div>
+    <div class="tech-chip"><span class="dot-tech" style="background:#ef4444;"></span> Hunter.io API</div>
+    <div class="tech-chip"><span class="dot-tech" style="background:#8b5cf6;"></span> httpx (async)</div>
+    <div class="tech-chip"><span class="dot-tech" style="background:#0ea5e9;"></span> dnspython</div>
+    <div class="tech-chip"><span class="dot-tech" style="background:#f97316;"></span> Vanilla HTML/CSS/JS</div>
+  </div>
+</section>
+
+<hr class="divider" />
+
+<!-- ═══════════ GETTING STARTED ═══════════ -->
+<section id="getting-started" style="background: var(--navy);">
+  <div class="center" style="margin-bottom:48px;">
+    <div class="section-label" style="color:#60a5fa;" data-en="Getting Started" data-zh="快速开始"></div>
+    <h2 style="color:var(--white);" data-en="Up & Running in 3 Minutes" data-zh="3 分钟内启动运行"></h2>
+    <p class="section-desc" style="color:rgba(255,255,255,.6);" data-en="One shell script sets up everything — virtual environment, dependencies, and the server."
+       data-zh="一个脚本完成所有配置——虚拟环境、依赖安装和服务器启动。"></p>
+  </div>
+  <div class="setup-grid" style="max-width:900px;margin:0 auto;">
+
+    <div class="setup-card">
+      <h3 data-en="1 · Environment Variables" data-zh="1 · 环境变量配置"></h3>
+      <p style="font-size:.85rem;color:rgba(255,255,255,.5);margin-bottom:18px;" data-en="Create a .env file in the project root:" data-zh="在项目根目录创建 .env 文件："></p>
+      <div class="env-row">
+        <div class="env-item">
+          <div class="env-key">GROQ_API_KEY=<span style="color:#86efac;">your_key</span></div>
+          <div class="env-desc" data-en="Required · Free tier available at console.groq.com" data-zh="必填 · 可在 console.groq.com 免费获取"></div>
+        </div>
+        <div class="env-item">
+          <div class="env-key">HUNTER_API_KEY=<span style="color:#86efac;">your_key</span></div>
+          <div class="env-desc" data-en="Optional · Email discovery fallback (hunter.io)" data-zh="可选 · 邮箱查找兜底（hunter.io）"></div>
+        </div>
+      </div>
+    </div>
+
+    <div class="setup-card">
+      <h3 data-en="2 · Clone & Run" data-zh="2 · 克隆并运行"></h3>
+      <div class="code-block">
+<span class="c"># Clone the repository</span>
+<span class="cmd">git clone</span> https://github.com/sleangao/iHunter.git
+<span class="cmd">cd</span> iHunter
+
+<span class="c"># Add your API keys</span>
+<span class="cmd">cp</span> .env.example .env
+<span class="c"># (edit .env with your keys)</span>
+
+<span class="c"># Start the app</span>
+<span class="cmd">./start.sh</span>
+
+<span class="c"># Open in browser</span>
+<span>→</span> http://localhost:8000
+      </div>
+    </div>
+
+  </div>
+</section>
+
+<!-- ═══════════ FOOTER ═══════════ -->
+<footer>
+  <div class="foot-left">
+    <span class="foot-name">🇨🇳→🇩🇪 iHunters Germany</span>
+    <span data-en="AI-Powered Export Lead Platform · Open Source · MIT License"
+          data-zh="AI 驱动出口商机平台 · 开源 · MIT 许可证"></span>
+  </div>
+  <div>
+    <a href="https://github.com/sleangao/iHunter" target="_blank" rel="noopener"
+       data-en="View Source on GitHub" data-zh="在 GitHub 查看源码">View Source on GitHub</a>
+  </div>
+</footer>
+
+<script>
+  let currentLang = 'en';
+
+  function setLang(lang) {
+    currentLang = lang;
+    document.getElementById('btnEN').classList.toggle('active', lang === 'en');
+    document.getElementById('btnZH').classList.toggle('active', lang === 'zh');
+    document.documentElement.lang = lang === 'zh' ? 'zh-CN' : 'en';
+
+    document.querySelectorAll('[data-en]').forEach(el => {
+      const txt = el.getAttribute('data-' + lang);
+      if (txt) el.innerHTML = txt;
+    });
+  }
+
+  // Init
+  setLang('en');
+</script>
+</body>
+</html>
