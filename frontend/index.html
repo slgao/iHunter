@@ -1,0 +1,213 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>iHunters Germany — AI Export Platform</title>
+  <link rel="icon" type="image/svg+xml" href="/static/favicon.svg" />
+  <link rel="stylesheet" href="/static/styles.css" />
+</head>
+<body>
+  <nav class="navbar">
+    <div class="nav-brand">
+      <span class="flag">🇨🇳→🇩🇪</span>
+      <span class="brand-name">iHunters Germany</span>
+      <span class="tagline">AI-Powered Lead Hunter</span>
+    </div>
+    <div class="nav-stats" id="navStats">
+      <span class="stat-pill" id="statLeads">— leads</span>
+      <span class="stat-pill" id="statContacted">— contacted</span>
+      <span class="stat-pill" id="statEmails">— emails</span>
+    </div>
+  </nav>
+
+  <div class="container">
+
+    <!-- Product Switcher -->
+    <section class="card switcher-card" id="sectionSwitcher">
+      <div class="switcher-bar">
+        <span class="switcher-label">Products</span>
+        <button class="switcher-arrow" id="switcherLeft" onclick="scrollSwitcher(-1)">&#8249;</button>
+        <div class="switcher-tabs" id="productList"></div>
+        <button class="switcher-arrow" id="switcherRight" onclick="scrollSwitcher(1)">&#8250;</button>
+        <button class="btn btn-primary btn-sm switcher-new" id="btnNewProduct">+ New</button>
+      </div>
+    </section>
+
+    <!-- Step 1: Product -->
+    <section class="card" id="sectionProduct">
+      <div class="card-header">
+        <span class="step-badge">Step 1</span>
+        <h2>Your Product</h2>
+        <p>Tell us what you're exporting from China to Germany</p>
+      </div>
+      <form id="productForm" class="form-grid">
+        <div class="form-group">
+          <label>Product Name *</label>
+          <input type="text" id="productName" placeholder="e.g. Stainless Steel Water Bottles" required />
+        </div>
+        <div class="form-group">
+          <label>Category *</label>
+          <select id="productCategory" required>
+            <option value="">Select category…</option>
+            <option value="Electronics">Electronics & Gadgets</option>
+            <option value="Home & Kitchen">Home & Kitchen</option>
+            <option value="Fashion & Apparel">Fashion & Apparel</option>
+            <option value="Sports & Outdoor">Sports & Outdoor</option>
+            <option value="Beauty & Health">Beauty & Health</option>
+            <option value="Industrial & B2B">Industrial & B2B Supplies</option>
+            <option value="Toys & Kids">Toys & Kids</option>
+            <option value="Auto Parts">Auto Parts & Accessories</option>
+            <option value="Food & Agriculture">Food & Agriculture</option>
+            <option value="Furniture">Furniture & Décor</option>
+            <option value="Other">Other</option>
+          </select>
+        </div>
+        <div class="form-group full-width">
+          <label>Description *</label>
+          <textarea id="productDesc" rows="3" placeholder="Describe your product: material, features, specifications, unique selling points…" required></textarea>
+        </div>
+        <div class="form-group">
+          <label>Price Range (USD)</label>
+          <input type="text" id="priceRange" placeholder="e.g. $5–$15 per unit" />
+        </div>
+        <div class="form-group">
+          <label>Minimum Order Quantity</label>
+          <input type="text" id="moq" placeholder="e.g. 500 units" />
+        </div>
+        <div class="form-group">
+          <label>Origin City</label>
+          <input type="text" id="originCity" placeholder="e.g. Shenzhen" value="Shenzhen" />
+        </div>
+        <div class="form-actions full-width">
+          <button type="submit" class="btn btn-primary" id="btnSaveProduct">
+            <span>Save Product &amp; Analyze Market</span>
+          </button>
+        </div>
+      </form>
+    </section>
+
+    <!-- Market Analysis -->
+    <section class="card hidden" id="sectionAnalysis">
+      <div class="card-header">
+        <span class="step-badge">Market Analysis</span>
+        <h2>German Market Analysis</h2>
+      </div>
+      <div id="analysisContent" class="analysis-grid"></div>
+    </section>
+
+    <!-- Step 2: Find Real Leads -->
+    <section class="card hidden" id="sectionRealImport">
+      <div class="card-header">
+        <span class="step-badge">Step 2</span>
+        <h2>Find Real German Companies</h2>
+        <p>AI suggests real companies — we scrape their website for the actual contact email</p>
+      </div>
+
+      <div class="import-tabs">
+        <button class="import-tab active" onclick="switchImportTab(this,'suggest')">✨ AI Suggestions</button>
+        <button class="import-tab" onclick="switchImportTab(this,'single')">Single Entry</button>
+        <button class="import-tab" onclick="switchImportTab(this,'bulk')">Bulk Paste</button>
+      </div>
+
+      <!-- AI Suggestions -->
+      <div id="importSuggest" class="import-panel">
+        <div style="padding:20px 28px">
+          <div style="display:flex;gap:16px;align-items:flex-end;flex-wrap:wrap;margin-bottom:20px">
+            <div class="form-group" style="min-width:140px">
+              <label>Number of suggestions</label>
+              <input type="number" id="suggestCount" value="15" min="5" max="30" />
+            </div>
+            <div class="form-group" style="flex:1;min-width:200px">
+              <label>Filter by cities (optional)</label>
+              <input type="text" id="suggestCities" placeholder="e.g. Berlin, Munich, Hamburg" />
+            </div>
+            <button class="btn btn-primary" id="btnSuggest">✨ Get AI Suggestions</button>
+          </div>
+          <div id="suggestResults"></div>
+        </div>
+      </div>
+
+      <!-- Single entry -->
+      <div id="importSingle" class="import-panel hidden">
+        <div class="form-grid" style="padding-top:0">
+          <div class="form-group">
+            <label>Company Name *</label>
+            <input type="text" id="importCompany" placeholder="e.g. Musikhaus Thomann GmbH" />
+          </div>
+          <div class="form-group">
+            <label>Website *</label>
+            <input type="text" id="importWebsite" placeholder="e.g. thomann.de" />
+          </div>
+          <div class="form-group">
+            <label>City</label>
+            <input type="text" id="importCity" placeholder="e.g. Munich" />
+          </div>
+          <div class="form-group">
+            <label>Industry</label>
+            <input type="text" id="importIndustry" placeholder="e.g. Music Retail" />
+          </div>
+          <div class="form-group">
+            <label>Contact Name (optional)</label>
+            <input type="text" id="importContact" placeholder="e.g. Hans Müller" />
+          </div>
+          <div class="form-actions full-width">
+            <button class="btn btn-primary" id="btnImportSingle">Find Email & Import</button>
+          </div>
+        </div>
+        <div id="importSingleResult"></div>
+      </div>
+
+      <!-- Bulk paste -->
+      <div id="importBulk" class="import-panel hidden">
+        <div style="padding:0 28px 20px">
+          <label class="form-group" style="display:block;margin-bottom:12px">
+            <span style="font-size:13px;font-weight:600;color:#444">Paste companies — one per line:</span>
+            <code style="display:block;font-size:12px;color:#888;margin:4px 0 8px">Company Name | website.de | City | Industry</code>
+            <textarea id="bulkText" rows="8" style="width:100%;padding:10px;border:1.5px solid #e0e0e0;border-radius:8px;font-size:13px;font-family:monospace"
+              placeholder="Musikhaus Thomann GmbH | thomann.de | Treppendorf | Music Retail
+MediaMarkt GmbH | mediamarkt.de | Ingolstadt | Electronics
+Jako-O GmbH | jako-o.de | Bad Rodach | Kids & Toys"></textarea>
+          </label>
+          <button class="btn btn-primary" id="btnImportBulk">Import All & Find Emails</button>
+        </div>
+        <div id="importBulkResult"></div>
+      </div>
+    </section>
+
+    <!-- Step 3: Lead Dashboard -->
+    <section class="card hidden" id="sectionLeads">
+      <div class="card-header">
+        <span class="step-badge">Step 3</span>
+        <h2>Lead Dashboard</h2>
+        <div style="display:flex;justify-content:space-between;align-items:center;flex-wrap:wrap;gap:12px;margin-top:8px">
+          <div class="lead-filters" style="margin-top:0">
+            <button class="filter-btn active" data-filter="all">All</button>
+            <button class="filter-btn" data-filter="new">New</button>
+            <button class="filter-btn" data-filter="contacted">Contacted</button>
+            <button class="filter-btn" data-filter="replied">Replied</button>
+            <button class="filter-btn" data-filter="qualified">Qualified</button>
+            <button class="filter-btn" data-filter="closed">Closed</button>
+          </div>
+          <button class="btn btn-outline btn-sm" id="btnVerifyAll">✔ Verify All Emails</button>
+        </div>
+      </div>
+      <div id="leadsTable"></div>
+    </section>
+
+    <!-- Outreach Modal -->
+    <div class="modal hidden" id="outreachModal">
+      <div class="modal-overlay" id="modalOverlay"></div>
+      <div class="modal-content">
+        <div class="modal-header">
+          <h3>AI-Generated Outreach Email</h3>
+          <button class="btn-close" id="btnCloseModal">&times;</button>
+        </div>
+        <div id="outreachContent"></div>
+      </div>
+    </div>
+  </div>
+
+  <script src="/static/app.js"></script>
+</body>
+</html>
